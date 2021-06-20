@@ -1,5 +1,5 @@
 (function () {
-    this.tagsInput = function () {
+    this.emailTagsInput = function () {
         // Default state
         var defaults = {
             selector: '',
@@ -56,7 +56,7 @@
         
 
         // Add Tag
-        tagsInput.prototype.addTag = function (string) {
+        emailTagsInput.prototype.addTag = function (string) {
             if (this.anyErrors(string)) return;
             const isStringWithComma = string.split(',');
             const newFilterArr = isStringWithComma.filter((email => email && email.replace(',', '').trim()));
@@ -97,7 +97,7 @@
         }
 
         // Delete Tag
-        tagsInput.prototype.deleteTag = function (tag, i) {
+        emailTagsInput.prototype.deleteTag = function (tag, i) {
             tag.remove();
             this.arr.splice(i, 1);
             this.original_input.value = this.arr.join(',');
@@ -105,7 +105,7 @@
         }
 
         // Errors
-        tagsInput.prototype.anyErrors = function (string) {
+        emailTagsInput.prototype.anyErrors = function (string) {
             if (this.options.max != null && this.arr.length >= this.options.max) {
                 alert('Max limit reached');
                 return true;
@@ -120,7 +120,7 @@
         }
 
 
-        tagsInput.prototype.addData = function (array) {
+        emailTagsInput.prototype.addData = function (array) {
             var plugin = this;
 
             array.forEach(function (string) {
@@ -129,15 +129,15 @@
             return this;
         }
 
-        tagsInput.prototype.getAllPeople = function () {
+        emailTagsInput.prototype.getAllPeople = function () {
             return this.arr;
         }
 
-        tagsInput.prototype.getCount = () => {
+        emailTagsInput.prototype.getCount = () => {
             return this.arr.length;
         }
 
-        tagsInput.prototype.replaceEmails = function(arr) {
+        emailTagsInput.prototype.replaceEmails = function(arr) {
             let element = document.querySelectorAll(".tag");
             let inValidElement = document.querySelectorAll(".invalid-tag");
             Array.prototype.forEach.call( element, function( node ) {
@@ -152,12 +152,16 @@
             plugin.addData(arr);
             return this;
         }
+
+        emailTagsInput.prototype.subscriberPeople = email => {
+            this.addTag(email);
+        }
     }
 }())
 
 
-var emailInputs = new tagsInput({
-    selector: 'tag-input1',
+const emailInputs = new emailTagsInput({
+    selector: 'email-tag-input',
     duplicate: false,
     max: 20
 });
@@ -180,3 +184,7 @@ document.getElementById("getCount").addEventListener("click", getCount);
 
 
 /// API Instances
+
+// emailInputs.getAllPeople()
+// emailInputs.replaceEmails()
+// emailInputs.subscriberPeople()
